@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Simon says</title>
+
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="src/css/style.css">
+    </head>
+    <body>
+        <div class="game-holder">
+            <div class="outer-ring">
+                <div class="game">
+                    <div id="green"class="button-green"></div>
+                    <div id="red" class="button-red"></div>
+                    <div id="yellow" class="button-yellow"></div>
+                    <div id="blue" class="button-blue"></div>
+                </div>
+                <div class="controls">
+                    <div class="title">
+                        <h1>Simon</h1>
+                    </div>
+                    <div class="bottom-panel">
+                        <div class="row align-items-center justify-content-center top-commands">
+                            <div id="light" class="light"></div>
+                            <div class="switch-holder">
+                                <button id="switch" class="switch"></button>
+                            </div>
+                            <div class="start-indicator">
+                                <p>Start</p>
+                                <button id="startBtn"></button>
+                            </div>
+                            <div class="strict-indicator">
+                                <p>Strict</p>
+                                <button id="strictBtn"></button>
+                            </div>
+                        </div>
+                        <div class="row align-items-center justify-content-center bottom-commands">
+                            <p>Lvl </p>
+                            <div class="display">
+                                <p id="strictLbl" class="strict"></p>
+                                <p id="levelLbl" class="level"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="src/js/main.js"></script>
+    </body>
+</html>
