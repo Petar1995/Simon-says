@@ -4,7 +4,6 @@ function main()
 
     const synthByUser = new Tone.Synth().toMaster();
     const synthBySimon = new Tone.Synth().toMaster();
-    const synthMistake = new Tone.Synth().toMaster();
 
 
     const light = document.getElementById("light");
@@ -19,6 +18,7 @@ function main()
     const blueBtn = document.getElementById("blueBtn");
 
     var timeout;
+    var tempTimeout;
     var count=0;
     var game = {
          gameOn : false, //da li je igrica ukljucena (switch)
@@ -46,6 +46,7 @@ function main()
     }
     const error = function()
     {
+        if(!game.gameOn) return;
         count=0; 
         synthBySimon.triggerAttackRelease(notes.wrong, "8n");
         levelLbl.innerHTML = "ERR";
@@ -156,9 +157,10 @@ function main()
     //blokira igraca da ista klikne i pokazuje dugmad redBtnom
     const simonPlayTones = function()
     {
+
         clearTimeout(timeout);
         game.ready=false;
-        setTimeout(() => {
+        tempTimeout = setTimeout(() => {
             playTone(game.levels[count]);
             count++;
             if(count<game.levels.length)
@@ -207,6 +209,7 @@ function main()
         {
             game.gameOn = false;
             game.strictMode = false;
+            resetGame();
             clearTimeout(timeout);
             strictLbl.innerHTML = "";
             switchBtn.style.marginLeft = "0";
