@@ -38,37 +38,37 @@ p
     overflow: hidden;
 }
 
-.button-yellow, .button-green, .button-red, .button-blue
+.button-yellowBtn, .button-greenBtn, .button-redBtn, .button-blueBtn
 {
-    background-color:yellow;
+    background-color:yellowBtn;
     width:245px;
     height:250px;
-    border: 2px solid yellow;
+    border: 2px solid yellowBtn;
     opacity: 0.7;
     cursor:pointer;
 }
-.button-yellow
+.button-yellowBtn
 {
     border-bottom-left-radius:100%;
 }
-.button-green
+.button-greenBtn
 {
-    background-color:green;
+    background-color:greenBtn;
     margin-bottom:10px;
-    border-color:green;
+    border-color:greenBtn;
     border-top-left-radius:100%;
 }
-.button-red
+.button-redBtn
 {
-    background-color:red;
-    border-color:red;
+    background-color:redBtn;
+    border-color:redBtn;
     border-top-right-radius:100%;
 
 }
-.button-blue
+.button-blueBtn
 {
-    background-color:blueviolet;
-    border-color:blueviolet;
+    background-color:blueBtnviolet;
+    border-color:blueBtnviolet;
     border-bottom-right-radius:100%;
 }
 .hover:hover
@@ -172,11 +172,11 @@ button:focus
     height:20px;
     width:20px;
     border-radius: 50%;
-    background-color:green;
+    background-color:greenBtn;
 }
 .strict-indicator button
 {
-    background-color:red;
+    background-color:redBtn;
 }
 .display
 {
@@ -190,7 +190,7 @@ button:focus
 }
 .strict, .level
 {
-    color:red;
+    color:redBtn;
     font-family: 'VT323', monospace;
     margin-left:5px;
     margin-right:10px;

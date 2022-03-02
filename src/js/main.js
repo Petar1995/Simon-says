@@ -6,28 +6,28 @@ function main()
     const strictBtn = document.getElementById("strictBtn");
     const strictLbl = document.getElementById("strictLbl");
     const levelLbl = document.getElementById("levelLbl");
-    const red = document.getElementById("red");
-    const yellow = document.getElementById("yellow");
-    const green = document.getElementById("green");
-    const blue = document.getElementById("blue");
+    const redBtn = document.getElementById("redBtn");
+    const yellowBtn = document.getElementById("yellowBtn");
+    const greenBtn = document.getElementById("greenBtn");
+    const blueBtn = document.getElementById("blueBtn");
 
     var timeout;
     var i=0;
     var game = {
-         'gameOn' : false, //da li je igrica ukljucena (switch)
-         'currentLevel': 0,
-         'strictMode' : false,
-         'clicked' : null, //zadnje kliknuto dugme
-         'levels' : [],
-         'ready' : true, //da li igrac moze da klika
-         'started' : false, //igra je u toku
+         gameOn : false, //da li je igrica ukljucena (switch)
+         currentLevel: 0,
+         strictMode : false,
+         clicked : null, //zadnje kliknuto dugme
+         levels : [],
+         ready : true, //da li igrac moze da klika
+         started : false, //igra je u toku
     }
     const notes = {
-        'green': new Audio('src/audio/green.mp3'),
-        'red': new Audio('src/audio/red.mp3'),
-        'blue': new Audio('src/audio/blue.mp3'),
-        'yellow': new Audio('src/audio/yellow.mp3'),
-        'wrong' : new Audio('src/audio/wrong.mp3'),
+        greenBtn: new Audio('src/audio/green.mp3'),
+        redBtn: new Audio('src/audio/red.mp3'),
+        blueBtn: new Audio('src/audio/blue.mp3'),
+        yellowBtn: new Audio('src/audio/yellow.mp3'),
+        wrong : new Audio('src/audio/wrong.mp3'),
     }
     const resetGame = function()
     {
@@ -110,34 +110,34 @@ function main()
     {
         if(tone===0) 
         {
-            notes.green.play();
-            green.style.opacity = "1";
+            notes.greenBtn.play();
+            greenBtn.style.opacity = "1";
             setTimeout(() => {
-                green.style.opacity = "0.7";
+                greenBtn.style.opacity = "0.7";
             }, 300);
         }
         else if(tone===1)
         {
-            notes.red.play();
-            red.style.opacity = "1";
+            notes.redBtn.play();
+            redBtn.style.opacity = "1";
             setTimeout(() => {
-                red.style.opacity = "0.7";
+                redBtn.style.opacity = "0.7";
             }, 300);
         } 
         else if(tone===2)
         {
-            notes.blue.play();
-            blue.style.opacity = "1";
+            notes.blueBtn.play();
+            blueBtn.style.opacity = "1";
             setTimeout(() => {
-                blue.style.opacity = "0.7";
+                blueBtn.style.opacity = "0.7";
             }, 300);
         } 
         else if(tone===3)
         {
-            notes.yellow.play();
-            yellow.style.opacity = "1";
+            notes.yellowBtn.play();
+            yellowBtn.style.opacity = "1";
             setTimeout(() => {
-                yellow.style.opacity = "0.7";
+                yellowBtn.style.opacity = "0.7";
             }, 300);
         } 
     }
@@ -147,7 +147,7 @@ function main()
         return temp;
     }
 
-    //blokira igraca da ista klikne i pokazuje dugmad redom
+    //blokira igraca da ista klikne i pokazuje dugmad redBtnom
     const simonPlayTones = function()
     {
         clearTimeout(timeout);
@@ -193,10 +193,10 @@ function main()
     }
     const toggleHover = function()
     {
-        red.classList.toggle("hover");
-        green.classList.toggle("hover");
-        yellow.classList.toggle("hover");
-        blue.classList.toggle("hover");
+        redBtn.classList.toggle("hover");
+        greenBtn.classList.toggle("hover");
+        yellowBtn.classList.toggle("hover");
+        blueBtn.classList.toggle("hover");
     }
 
     // switch - pali ili gasi igricu
@@ -218,7 +218,7 @@ function main()
             resetGame();
             game.gameOn = true;
             switchBtn.style.marginLeft = "50%";
-            light.style.backgroundColor = "green";
+            light.style.backgroundColor = "greenBtn";
             levelLbl.innerHTML = "-";
             toggleHover();
         }
@@ -236,25 +236,25 @@ function main()
         startGame();
     });
 
-    red.addEventListener("click", function()
+    redBtn.addEventListener("click", function()
     {
         if(!game.gameOn || !game.ready) return;
         playTone(1);
         buttonClicked(1);
     });
-    yellow.addEventListener("click", function()
+    yellowBtn.addEventListener("click", function()
     {
         if(!game.gameOn  || !game.ready) return;
         playTone(3);
         buttonClicked(3);
     });
-    green.addEventListener("click", function()
+    greenBtn.addEventListener("click", function()
     {
         if(!game.gameOn  || !game.ready) return;
         playTone(0);
         buttonClicked(0);
     });
-    blue.addEventListener("click", function()
+    blueBtn.addEventListener("click", function()
     {
         if(!game.gameOn  || !game.ready) return;
         playTone(2);
