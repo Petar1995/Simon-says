@@ -1,5 +1,12 @@
+
 function main()
 {
+
+    const synthByUser = new Tone.Synth().toMaster();
+    const synthBySimon = new Tone.Synth().toMaster();
+    const synthMistake = new Tone.Synth().toMaster();
+
+
     const light = document.getElementById("light");
     const switchBtn = document.getElementById("switch");
     const startBtn = document.getElementById("startBtn");
@@ -12,52 +19,50 @@ function main()
     const blueBtn = document.getElementById("blueBtn");
 
     var timeout;
-    var i=0;
+    var count=0;
     var game = {
          gameOn : false, //da li je igrica ukljucena (switch)
          currentLevel: 0,
          strictMode : false,
          clicked : null, //zadnje kliknuto dugme
          levels : [],
-         ready : true, //da li igrac moze da klika
+         ready : false, //da li igrac moze da klika
          started : false, //igra je u toku
     }
     const notes = {
-        greenBtn: new Audio('src/audio/green.mp3'),
-        redBtn: new Audio('src/audio/red.mp3'),
-        blueBtn: new Audio('src/audio/blue.mp3'),
-        yellowBtn: new Audio('src/audio/yellow.mp3'),
-        wrong : new Audio('src/audio/wrong.mp3'),
+        greenBtn: "C4",
+        redBtn: "D4",
+        blueBtn: "E4",
+        yellowBtn: "F4",
+        wrong : "D1",
     }
     const resetGame = function()
     {
         game.currentLevel=0;
         game.clicked=null;
         game.levels = [];
-        game.ready= true;
+        game.ready= false;
         game.started= false;
     }
     const error = function()
     {
-        i=0; 
+        count=0; 
+        synthBySimon.triggerAttackRelease(notes.wrong, "8n");
+        levelLbl.innerHTML = "ERR";
         setTimeout(() => {
-            notes.wrong.play();
-        }, 200);
+            levelLbl.innerHTML = game.currentLevel;
+        }, 300);
         if(game.strictMode)
         {
             clearTimeout(timeout);
-            setTimeout(() => {
-                resetGame();
-                startGame();
-            }, 500);
+            resetGame();
+            startGame();
         }
         else
         {
             clearTimeout(timeout);
             game.ready=false;
-            setTimeout(() => {
-                simonPlayTones();
-            }, 1500);
+            simonPlayTones();
             
         }
     }
@@ -68,27 +73,27 @@ function main()
         game.clicked = temp;
         if(checkClick(temp))
         {
-            i++;
+            count++;
             clearTimeout(timeout);
             timeout = setTimeout(() => {
                 error();
             }, 10000);
-            if(i>=game.levels.length)
+            if(count>=game.levels.length)
             {
-                if(i>=20)
+                if(count>=20)
                 {
                     clearTimeout(timeout);
                     resetGame();
                     strictLbl.innerHTML = "Winner";
                     levelLbl.innerHTML = "";
-                    i=0;
+                    count=0;
                     return;
                 }
                 game.ready=false;
                 game.levels.push(getNote());
                 game.currentLevel++;
                 levelLbl.innerHTML = game.currentLevel;
-                i=0;
+                count=0;
                 simonPlayTones();
             }
         }
@@ -101,7 +106,7 @@ function main()
     //proverava da li je dugme koje je kliknuto tacno za igru
     var checkClick = function()
     {
-        if(game.clicked == game.levels[i]) return true;
+        if(game.clicked == game.levels[count]) return true;
         else return false;
     }
 
@@ -110,36 +115,37 @@ function main()
     {
         if(tone===0) 
         {
-            notes.greenBtn.play();
-            greenBtn.style.opacity = "1";
+            synthBySimon.triggerAttackRelease(notes.greenBtn, "8n");
+            greenBtn.style.filter = "brightness(1)";
             setTimeout(() => {
-                greenBtn.style.opacity = "0.7";
+                greenBtn.style.filter = "brightness(0.65)";
             }, 300);
         }
         else if(tone===1)
         {
-            notes.redBtn.play();
-            redBtn.style.opacity = "1";
+            
+            synthBySimon.triggerAttackRelease(notes.redBtn, "8n");
+            redBtn.style.filter = "brightness(1)";
             setTimeout(() => {
-                redBtn.style.opacity = "0.7";
+                redBtn.style.filter = "brightness(0.65)";
             }, 300);
         } 
         else if(tone===2)
         {
-            notes.blueBtn.play();
-            blueBtn.style.opacity = "1";
+            synthBySimon.triggerAttackRelease(notes.blueBtn, "8n");
+            blueBtn.style.filter = "brightness(1)";
             setTimeout(() => {
-                blueBtn.style.opacity = "0.7";
+                blueBtn.style.filter = "brightness(0.65)";
             }, 300);
         } 
         else if(tone===3)
         {
-            notes.yellowBtn.play();
-            yellowBtn.style.opacity = "1";
+            synthBySimon.triggerAttackRelease(notes.yellowBtn, "8n");
+            yellowBtn.style.filter = "brightness(1)";
             setTimeout(() => {
-                yellowBtn.style.opacity = "0.7";
+                yellowBtn.style.filter = "brightness(0.65)";
             }, 300);
-        } 
+        }
     }
     var getNote = function()
     {
@@ -153,16 +159,16 @@ function main()
         clearTimeout(timeout);
         game.ready=false;
         setTimeout(() => {
-            playTone(game.levels[i]);
-            i++;
-            if(i<game.levels.length)
+            playTone(game.levels[count]);
+            count++;
+            if(count<game.levels.length)
             {
                 simonPlayTones();
             }
             else
             {
                 game.ready = true;
-                i=0;
+                count=0;
                 timeout = setTimeout(() => {
                     error();
                 }, 10000);
@@ -178,17 +184,12 @@ function main()
         }
         else
         {
-            var note = getNote();
-            setTimeout(() => {
-                playTone(note);
-            }, 500);
+            const note = getNote();
             game.currentLevel = 1;
             levelLbl.innerHTML = game.currentLevel;
             game.levels.push(note);
+            simonPlayTones();
             game.started = true;
-            timeout = setTimeout(() => {
-                error();
-            }, 10000);
         }
     }
     const toggleHover = function()
@@ -236,30 +237,76 @@ function main()
         startGame();
     });
 
-    redBtn.addEventListener("click", function()
+    redBtn.addEventListener("mousedown", function()
     {
         if(!game.gameOn || !game.ready) return;
-        playTone(1);
+        synthByUser.triggerAttack(notes.redBtn);
+        
+    });
+    redBtn.addEventListener("mouseup", function()
+    {
+        synthByUser.triggerRelease();
+        if(!game.gameOn || !game.ready) return;
         buttonClicked(1);
     });
-    yellowBtn.addEventListener("click", function()
+    redBtn.addEventListener("mouseleave", function()
+    {
+        synthByUser.triggerRelease();
+    });
+
+
+
+    yellowBtn.addEventListener("mousedown", function()
     {
         if(!game.gameOn  || !game.ready) return;
-        playTone(3);
+        synthByUser.triggerAttack(notes.yellowBtn);
+        
+    });
+    yellowBtn.addEventListener("mouseup", function()
+    {
+        synthByUser.triggerRelease();
+        if(!game.gameOn || !game.ready) return;
         buttonClicked(3);
     });
-    greenBtn.addEventListener("click", function()
+    yellowBtn.addEventListener("mouseleave", function()
+    {
+        synthByUser.triggerRelease();
+    });
+
+    greenBtn.addEventListener("mousedown", function()
     {
         if(!game.gameOn  || !game.ready) return;
-        playTone(0);
+        synthByUser.triggerAttack(notes.greenBtn);
+        
+    });
+    greenBtn.addEventListener("mouseup", function()
+    {
+        synthByUser.triggerRelease();
+        if(!game.gameOn || !game.ready) return;
         buttonClicked(0);
     });
-    blueBtn.addEventListener("click", function()
+    greenBtn.addEventListener("mouseleave", function()
+    {
+        synthByUser.triggerRelease();
+    });
+
+    blueBtn.addEventListener("mousedown", function()
     {
         if(!game.gameOn  || !game.ready) return;
-        playTone(2);
+        synthByUser.triggerAttack(notes.blueBtn);
+        
+    });
+    blueBtn.addEventListener("mouseup", function()
+    {
+        synthByUser.triggerRelease();
+        if(!game.gameOn || !game.ready) return;
         buttonClicked(2);
     });
+    blueBtn.addEventListener("mouseleave", function()
+    {
+        synthByUser.triggerRelease();
+    });
+
     strictBtn.addEventListener("click", function()
     {
         if(!game.gameOn || !game.ready) return;

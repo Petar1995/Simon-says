@@ -1,6 +1,7 @@
 body
 {
     background-color:rgb(214, 255, 239);
+    user-select: none;
 }
 
 p
@@ -38,42 +39,43 @@ p
     overflow: hidden;
 }
 
-.button-yellowBtn, .button-greenBtn, .button-redBtn, .button-blueBtn
+.button-yellow, .button-green, .button-red, .button-blue
 {
-    background-color:yellowBtn;
+    background-color:yellow;
     width:245px;
     height:250px;
-    border: 2px solid yellowBtn;
-    opacity: 0.7;
+    border: 2px solid yellow;
+    opacity: 1;
+    filter:brightness(0.65);
     cursor:pointer;
 }
-.button-yellowBtn
+.button-yellow
 {
     border-bottom-left-radius:100%;
 }
-.button-greenBtn
+.button-green
 {
-    background-color:greenBtn;
+    background-color:green;
     margin-bottom:10px;
-    border-color:greenBtn;
+    border-color:green;
     border-top-left-radius:100%;
 }
-.button-redBtn
+.button-red
 {
-    background-color:redBtn;
-    border-color:redBtn;
+    background-color:red;
+    border-color:red;
     border-top-right-radius:100%;
 
 }
-.button-blueBtn
+.button-blue
 {
-    background-color:blueBtnviolet;
-    border-color:blueBtnviolet;
+    background-color:blueviolet;
+    border-color:blueviolet;
     border-bottom-right-radius:100%;
 }
 .hover:hover
 {
-    opacity:1;
+    filter:brightness(1) !important;
 }
 
 .controls
@@ -172,11 +174,11 @@ button:focus
     height:20px;
     width:20px;
     border-radius: 50%;
-    background-color:greenBtn;
+    background-color:green;
 }
 .strict-indicator button
 {
-    background-color:redBtn;
+    background-color:red;
 }
 .display
 {
@@ -190,7 +192,7 @@ button:focus
 }
 .strict, .level
 {
-    color:redBtn;
+    color:red;
     font-family: 'VT323', monospace;
     margin-left:5px;
     margin-right:10px;
